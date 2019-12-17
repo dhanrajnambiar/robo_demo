@@ -4,6 +4,50 @@
   <script src="https://code.jquery.com/jquery-3.4.1.js"  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="  crossorigin="anonymous"></script>
 </head>
 <body>
-  <p>This is just a blank template</p>
+  <div>
+    <h2>Robo Operating Manual</h2>
+    <p> This is to simulate AJAX POST requests to Backend API's for creation of ROBOT, and navigate it.</p>
+  </div>
+  <div>
+    <h3>Instruction to create a ROBO</h3>
+    <p>
+      Kindly open web console or use POSTMAN.
+      Make an ajax call like below or POST request to API using POSTMAN.<br><br>
+      $.ajax({
+        url:"/robo/create_robo",
+        type:'POST',
+        data:{
+          "name":"Robo_1"
+        },
+        success: function(data){
+        console.log(data);
+        }
+      });
+    </p>
+    <p>
+      <b>Note :</b> The ROBO Name you pass to API must be unique and not reused.
+    </p>
+
+  </div>
+  <div>
+    <h3>Commands to ROBO</h3>
+    <p>
+      Make an ajax call like belowor POST request to API using POSTMAN.<br><br>
+      $.ajax({
+        url:"/robo/move",
+        type:'POST',
+        data:{
+          "name":"Robo_1",
+          "command":"PLACE 2,2,EAST MOVE MOVE REPORT"
+        },
+        success: function(data){
+        console.log(data);
+        }
+      });
+      </p>
+      <p>
+        <b>Note :</b> The ROBO Name you pass to API must be unique and not reused.
+      </p>
+  </div>
 </body>
 </html>
