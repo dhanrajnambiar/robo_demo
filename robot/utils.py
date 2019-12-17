@@ -61,11 +61,15 @@ def robo_navigate(r_obj, data):
                     data['Place']['y_cord'],\
                     data['Place']['face'])
         # outputs.append({"pl_res":pl_res})
+        if pl_res['status'] == "Failure":
+            outputs.append(pl_res['message'])
     for small_command in data['Navig']:
         if small_command == "MOVE":
             mv_res = r_obj.move()
             r_obj.save()
             # outputs.append({"mv_res":mv_res})
+            if mv_res['status'] == "Failure":
+                outputs.append(mv_res['message'])
         elif small_command == "RIGHT":
             r_obj.right()
             r_obj.save()

@@ -39,7 +39,7 @@ class Robo(models.Model):
             self.direction = face
             return {"status": "Success"}
         else:
-            return {"status": "Failure"}
+            return {"status": "Failure", "message": "Robot Missing"}
 
     def move(self):
         if self.direction == "NORTH" and \
@@ -56,7 +56,7 @@ class Robo(models.Model):
             self.x_cordinate -= 1
         else:
             self.current_move_blocked = True
-            return {"status": "Failure"}
+            return {"status": "Failure", "message": "Robot Missing"}
         return {"status": "Success"}
 
     def right(self):
