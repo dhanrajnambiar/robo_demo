@@ -9,8 +9,9 @@ class Robo(models.Model):
     x_cordinate = models.IntegerField(default=0)
     y_cordinate = models.IntegerField(default=0)
     direction = models.CharField(choices=dir_choices, max_length=5)
-    x_xtreme = 5
-    y_xtreme = 5
+
+    x_xtreme = 5#allowed maximum x-cordinate of Robo
+    y_xtreme = 5#allowed maximum y-cordinate of Robo
     current_move_blocked = False
     right_rotate_dict = {
         "NORTH":"EAST",
@@ -28,10 +29,12 @@ class Robo(models.Model):
     def __str__(self):
         return self.name
 
+    #below methods report current position
     def report(self):
         return "Current Position is ({}, {}) facing {}"\
                 .format(self.x_cordinate, self.y_cordinate, self.direction)
 
+    #below place the Robo at specific cordinates if given, else at origin, after evaluting whether it falls in the allowed range
     def place(self, x_cord=0, y_cord=0, face="NORTH"):
         if 0 <= x_cord <= Robo.x_xtreme and 0<= y_cord <= Robo.y_xtreme:
             self.x_cordinate = x_cord
@@ -41,6 +44,7 @@ class Robo(models.Model):
         else:
             return {"status": "Failure", "message": "Robot Missing"}
 
+    #below moves the Robo Based on the facing direction
     def move(self):
         if self.direction == "NORTH" and \
             0 <= (self.y_cordinate + 1) <= Robo.y_xtreme:
@@ -59,8 +63,10 @@ class Robo(models.Model):
             return {"status": "Failure", "message": "Robot Missing"}
         return {"status": "Success"}
 
+    #below turns the Robo 90 degree clockwise
     def right(self):
         self.direction = Robo.right_rotate_dict[self.direction]
 
+    #below turns the Robo 90 degree anticlockwise
     def left(self):
         self.direction = Robo.left_rotate_dict[self.direction]

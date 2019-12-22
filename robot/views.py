@@ -8,6 +8,8 @@ from .models import *
 from .utils import *
 # Create your views here.
 
+"""Below view 'init_robo' creates a Robo object and places it at origin facing NORTH by default"""
+
 @csrf_exempt
 def init_robo(request):
     if request.method == 'POST':
@@ -22,6 +24,7 @@ def init_robo(request):
     else:
         return HttpResponse(status=405)
 
+"""This view 'navigate' navigates the robot"""
 @csrf_exempt
 def navigate(request):
     if request.method == 'POST':

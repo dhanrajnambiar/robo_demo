@@ -1,8 +1,10 @@
 import re, pdb
 
+"""Instruction class contains method for parsing the commands. It doesnt  identify the Robo. This just parses the command using parse() method and stores placing details as a dict and moving operations sequentially in an array. This values are returned once get_details() method is called."""
+
 class Instruction(object):
-    MV_COMMANDS = set(['MOVE', 'LEFT', 'RIGHT', 'REPORT'])
-    PL_COMMANDS = set(['PLACE', 'NORTH', 'EAST', 'SOUTH', 'WEST'])
+    MV_COMMANDS = set(['MOVE', 'LEFT', 'RIGHT', 'REPORT'])#set of all move commands
+    PL_COMMANDS = set(['PLACE', 'NORTH', 'EAST', 'SOUTH', 'WEST'])#set of all placing commands
 
     def __init__(self, cmmd):
         self.placing_detail = {
@@ -19,7 +21,7 @@ class Instruction(object):
         mv_details = []
         # Commmand Parsing START
         parsed_cmd = re.split(',| ', cmd)
-        if 'PLACE' in parsed_cmd:
+        if 'PLACE' in parsed_cmd:#check for placing details
             p = parsed_cmd.index('PLACE')
             pl_details = parsed_cmd[p:p+4]
             mv_details = parsed_cmd[0:p] + parsed_cmd[p+4:]
@@ -37,8 +39,7 @@ class Instruction(object):
                 return
         #Validations of parsed commands END
         #storing values to instruction instance START
-        # pdb.set_trace()
-        if len(pl_details) > 0:
+        if len(pl_details) > 0:#some commands may not contain placing detail
             self.placing_detail['x_cord'] = int(pl_details[1])
             self.placing_detail['y_cord'] = int(pl_details[2])
             self.placing_detail['face'] = pl_details[3]
@@ -46,7 +47,7 @@ class Instruction(object):
         #storing values to instruction instance END
 
     def get_details(self):
-        if not self.command_error:
+        if not self.command_error:#check for valid command
             return {
                 "Place":self.placing_detail,
                 "Navig":self.move_details
@@ -54,9 +55,11 @@ class Instruction(object):
         else:
             return None
 
+"""Below function 'robo_navigate' calls the Robo methods to place and move the Robo according to the Parsed Instruction and record its output to array which is then returned"""
+
 def robo_navigate(r_obj, data):
-    outputs = []
-    if all(data['Place'].values()):
+    outputs = []#Array to store the output of move, report operations
+    if all(data['Place'].values()):#check whether all the required placing details are available
         pl_res = r_obj.place(data['Place']['x_cord'],\
                     data['Place']['y_cord'],\
                     data['Place']['face'])
